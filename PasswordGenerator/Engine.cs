@@ -36,7 +36,7 @@ namespace PasswordGenerator
                 var pg = new PasswordGenerator(input);
 
 
-                Console.WriteLine("(За изход от режим въвеждане: end)");
+                Console.WriteLine("(За изход от режим въвеждане: --end)");
                 Console.WriteLine("Въведете сайтове , които желаете:");
                 Console.ResetColor();
                 string site = Console.ReadLine();
