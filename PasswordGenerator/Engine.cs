@@ -103,6 +103,7 @@ namespace PasswordGenerator
                 {
                     Environment.Exit(0);
 
+
                 }
                 else if (input == "--new")
                 {
@@ -125,7 +126,7 @@ namespace PasswordGenerator
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine();
-            Console.WriteLine("▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
+            Console.WriteLine(new string('▬' , 30));
         }
         private void MainMenu()
         {
@@ -163,7 +164,7 @@ namespace PasswordGenerator
             StringBuilder sb = new StringBuilder();
             
             sb.AppendLine("● Програмата има за цел да генерира осем-цифрена парола , като символите съдържащи се в нея, са избрани на случаен принцип.");
-            sb.AppendLine("Паролите ще бъдат записани на работния плот в текстов документ.");
+            sb.AppendLine("Паролите ще бъдат записани на работния плот , в текстов документ.");
             sb.AppendLine("Просто следвайте инструкциите. ●");
             sb.AppendLine("Тук можете да проверите сигурността на генерираните пароли: https://www.passwordmonster.com");
             Console.WriteLine(sb.ToString()) ;
@@ -177,6 +178,7 @@ namespace PasswordGenerator
             Console.CursorVisible = false;
             Console.SetCursorPosition(1, 1);
             Console.ForegroundColor = ConsoleColor.Green;
+            
             for (int i = 0; i <= 100; i++)
             {
                 Console.Write($"[{i}%]");
@@ -184,11 +186,12 @@ namespace PasswordGenerator
                 {
                     Console.Write("█");
                 }
-
+                
                 Console.SetCursorPosition(1, 1);
                 System.Threading.Thread.Sleep(50);
 
             }
+            
             Console.WriteLine();
         }
       
