@@ -17,7 +17,7 @@ namespace PasswordGenerator
         public string Name { get; private set; }
 
 
-        public void Generator(string fileName, List<string> sites)
+        internal void Generator(string fileName, List<string> sites)
         {
 
 
@@ -41,9 +41,9 @@ namespace PasswordGenerator
 
 
 
-        static string CreatePassword(int lenght)
+        private string CreatePassword(int lenght)
         {
-            const string validChars = "zxcvbnmasdfghjklqwertyuiopZXCVBNMASDFGHJKLQWERTYUIOP!@#$%^&";
+            const string validChars = "zxcvbnmasdfghjklqwertyuiopZXCVBNMASDFGHJKLQWERTYUIOP!@#$%^&!@#$%^&*()_+=\\[{\\]};:<>|./?,-";
             const string validNums = "0123456789";
 
             Random random = new Random();
@@ -63,7 +63,7 @@ namespace PasswordGenerator
 
                 if (ValidPassword(sb.ToString()) == true)
                 {
-                    password.AppendLine(sb.ToString());
+                    password.Append(sb.ToString());
                     break;
                 }
 
@@ -86,9 +86,6 @@ namespace PasswordGenerator
 
             bool valid = cointainsNum.IsMatch(password) && containUpperChar.IsMatch(password)
             && containsLowerChar.IsMatch(password) && containsSymbols.IsMatch(password) && validLenght;
-
-
-            Console.WriteLine(valid);
 
             return valid;
         }
