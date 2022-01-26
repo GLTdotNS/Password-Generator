@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace PasswordGenerator
@@ -40,23 +41,56 @@ namespace PasswordGenerator
 
 
 
-        private string CreatePassword(int lenght)
+        static string CreatePassword(int lenght)
         {
             const string validChars = "zxcvbnmasdfghjklqwertyuiopZXCVBNMASDFGHJKLQWERTYUIOP!@#$%^&";
             const string validNums = "0123456789";
 
             Random random = new Random();
-            StringBuilder sb = new StringBuilder();
+            StringBuilder password = new StringBuilder();
+            int temp = lenght;
 
-            lenght /= 2;
-            for (int i = 0; i < lenght; i++)
+            while (true)
             {
-                sb.Append(validChars[random.Next(validChars.Length)]);
-                sb.Append(validNums[random.Next(validNums.Length)]);
+                StringBuilder sb = new StringBuilder();
+
+                lenght /= 2;
+                for (int i = 0; i < lenght; i++)
+                {
+                    sb.Append(validChars[random.Next(validChars.Length)]);
+                    sb.Append(validNums[random.Next(validNums.Length)]);
+                }
+
+                if (ValidPassword(sb.ToString()) == true)
+                {
+                    password.AppendLine(sb.ToString());
+                    break;
+                }
+
+                lenght = temp;
             }
 
 
-            return sb.ToString();
+            return password.ToString();
+
+        }
+        static bool ValidPassword(string password)
+        {
+            var cointainsNum = new Regex(@"[0-9]+");
+            var containUpperChar = new Regex(@"[A-Z]+");
+            var containsLowerChar = new Regex(@"[a-z]+");
+            var containsSymbols = new Regex(@"[!@#$%^&*()_+=\[{\]};:<>|./?,-]");
+            var validLenght = password.Length == 8;
+
+
+
+            bool valid = cointainsNum.IsMatch(password) && containUpperChar.IsMatch(password)
+            && containsLowerChar.IsMatch(password) && containsSymbols.IsMatch(password) && validLenght;
+
+
+            Console.WriteLine(valid);
+
+            return valid;
         }
     }
 }
