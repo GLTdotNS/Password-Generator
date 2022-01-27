@@ -33,7 +33,11 @@ namespace PasswordGenerator
                     continue;
                 }
                 ConsoleLines();
-                var pg = new PasswordGenerator(input);
+
+                Console.WriteLine("Въведете колко цифрена искате да бъде паролата");
+                int countOfSymbols = int.Parse(Console.ReadLine());
+                var pg = new PasswordGenerator(input , countOfSymbols);
+                ConsoleLines();
 
 
                 Console.WriteLine("(За изход от режим въвеждане: --end)");
@@ -53,8 +57,7 @@ namespace PasswordGenerator
 
                     site = Console.ReadLine();
                 }
-
-
+                
 
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("Сайтовете , които въведохте са:");

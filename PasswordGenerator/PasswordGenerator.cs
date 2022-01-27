@@ -7,17 +7,19 @@ using System.Threading.Tasks;
 
 namespace PasswordGenerator
 {
-    internal class PasswordGenerator
+    public class PasswordGenerator
     {
-        public PasswordGenerator(string name)
+        public PasswordGenerator(string name, int countOfSymbols)
         {
-            Name = name;
+            this.Name = name;
+            this.CountOfSymbols = countOfSymbols;
 
         }
         public string Name { get; private set; }
+        public int CountOfSymbols { get; set; }
 
 
-        internal void Generator(string fileName, List<string> sites)
+        public void Generator(string fileName, List<string> sites)
         {
 
 
@@ -29,7 +31,8 @@ namespace PasswordGenerator
             foreach (var s in sites)
             {
                 counter++;
-                password.WriteLine($"{counter}.{s} -> {CreatePassword(8)}");
+                password.WriteLine($"{counter}.{s} -> {CreatePassword(CountOfSymbols)}");
+
             }
             password.WriteLine($"{DateTime.Now}");
 
@@ -41,46 +44,52 @@ namespace PasswordGenerator
 
 
 
-        private string CreatePassword(int lenght)
+        private string CreatePassword(int length)
         {
-            const string validChars = "zxcvbnmasdfghjklqwertyuiopZXCVBNMASDFGHJKLQWERTYUIOP!@#$%^&!@#$%^&*()_+=\\[{\\]};:<>|./?,-";
-            const string validNums = "0123456789";
+            List<char> chars = new List<char>();
+
+            for (int i = 33; i <= 125; i++)
+            {
+
+                chars.Add((char)i);
+            }
 
             Random random = new Random();
             StringBuilder password = new StringBuilder();
-            int temp = lenght;
 
             while (true)
             {
                 StringBuilder sb = new StringBuilder();
 
-                lenght /= 2;
-                for (int i = 0; i < lenght; i++)
+                for (int i = 0; i < length; i++)
                 {
-                    sb.Append(validChars[random.Next(validChars.Length)]);
-                    sb.Append(validNums[random.Next(validNums.Length)]);
+                    sb.Append(chars[random.Next(chars.Count)]);
+                    if (ValidPassword(sb.ToString(), length))
+                    {
+                        break;
+                    }
                 }
 
-                if (ValidPassword(sb.ToString()) == true)
+                if (ValidPassword(sb.ToString(), length) == true)
                 {
+
                     password.Append(sb.ToString());
                     break;
                 }
 
-                lenght = temp;
             }
 
 
             return password.ToString();
 
         }
-        static bool ValidPassword(string password)
+        static bool ValidPassword(string password, int lenght)
         {
             var cointainsNum = new Regex(@"[0-9]+");
             var containUpperChar = new Regex(@"[A-Z]+");
             var containsLowerChar = new Regex(@"[a-z]+");
             var containsSymbols = new Regex(@"[!@#$%^&*()_+=\[{\]};:<>|./?,-]");
-            var validLenght = password.Length == 8;
+            var validLenght = password.Length == lenght;
 
 
 
